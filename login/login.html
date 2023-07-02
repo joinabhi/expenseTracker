@@ -13,20 +13,17 @@
         padding: 20px;
     }
 </style>
-
 <body>
-    <form class="pure-form">
+    <form onsubmit="login(event)" class="pure-form">
         <fieldset>
             <legend>Confirm your Email and Password</legend>
             <input type="email" placeholder="Email" id="email" required>
             <input type="password" placeholder="Password" id="password" required>
-
             <button type="submit" class="pure-button pure-button-primary">Confirm</button>
         </fieldset>
     </form>
     <a href="../signUp/signUp.html">New user-SignUp Now</a>
-    <script src="./login.js"></script>
+    <script src="login.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
 </body>
-
 </html>

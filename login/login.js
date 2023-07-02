@@ -13,17 +13,12 @@ function login(event){
          .then(response=>{
             if(response.status===201){
                alert(response.data.message)
-            }else{
-               throw new Error(response.data.message)
+               localStorage.setItem('token', response.data.token)
+               window.location.href="../expenseTracker/expense.html"
             }
         }).catch(err=>{
             console.log(JSON.stringify(err))
             document.body.innerHTML+=`<div style="color:red;">${err.message}</div>` 
          })
    }
-   //   function displayErrorMessage(errorMessage) {
-   //    const parentElement = document.getElementById("error-message");
-   //    const childElement = document.createElement('li');
-   //    childElement.textContent = errorMessage;
-   //    parentElement.appendChild(childElement);
-   //  }
+  

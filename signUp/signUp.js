@@ -21,10 +21,8 @@ function signUp(event) {
       })
     .catch((error) => {
       if (error.response && error.response.status === 400) {
-        const parentElement = document.getElementById("error-message");
-        const childElement=document.createElement('li')
-        childElement.textContent = "user already exists";
-        parentElement.append(childElement)
+       alert("user already exists");
+        
       } else {
         console.log(JSON.stringify(error))
             document.body.innerHTML+=`<div style="color:red;">${error.message}</div>`

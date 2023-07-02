@@ -1,7 +1,6 @@
 const User=require('../model/user');
 const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
-const { where } = require('sequelize');
 require('dotenv').config()
 
 const signUp=async(req, res)=>{
@@ -29,6 +28,8 @@ const signUp=async(req, res)=>{
     res.status(500).json({message:"something went wrong"})
   }
 }
+
+
 const signIn=async(req, res)=>{
   const {email, password}=req.body;
   try{
@@ -41,6 +42,7 @@ const signIn=async(req, res)=>{
     return res.status(400).json({message:"Invalid Credential"})
   }
   const token=jwt.sign({email:existingUser.email, id:existingUser.id}, process.env.SECRET_KEY);
+  console.log("45================+++", token )
   res.status(201).json({user:existingUser, message:"user logged in successfully", token:token});
   }catch(error){
     console.log(error);
