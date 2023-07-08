@@ -20,6 +20,7 @@ const Expense=sequelize.define('e',{
     type:Sequelize.DOUBLE,
     allowNull:false
   }
+ 
 });
 
 module.exports=Expense;
