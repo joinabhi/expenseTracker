@@ -1,5 +1,8 @@
 const Razorpay = require("razorpay");
 const Order = require('../model/orders');
+const jwt=require("jsonwebtoken");
+const User=require('../model/user');
+require('dotenv').config()
 
 exports.purchasePremium = async (req, res) => {
   try {
@@ -31,20 +34,29 @@ exports.purchasePremium = async (req, res) => {
 };
 
 
-
-  
 exports.updateTransactionStatus = async (req, res) => {
-    try {
-        const { payment_id, order_id } = req.body;
-        const order = await Order.findOne({ where: { orderid: order_id } });
-        const promise1 = order.update({ paymentid: payment_id, status: 'SUCCESSFUL' })
-        const promise2 = req.user.update({ ispremiumuser: true })
+  try {
+    const {payment_id, order_id} = req.body;
+   
+    // console.log('41---------------------bhai', existingUser)
+    const order = await Order.findOne({ where: { orderid: order_id } });
+    const promise1 = order.update({ paymentid: payment_id, status: 'SUCCESSFUL' });
+    const promise2 = req.user.update({ ispremiumuser: true });
 
-        Promise.all([promise1, promise2]).then(() => {
-            return res.status(202).json({ success: true, message: "Transaction Successful" })
-        }).catch(err => console.log(err))
-    } catch (err) {
-        console.log(err)
-        res.status(403).json({ error: err, message: "something went wrong" })
-    }
-}
+    Promise.all([promise1, promise2]).then(() => {
+    
+      
+      
+      const token = jwt.sign(
+        {uId:req.user.id, ispremiumuser:true },
+        process.env.SECRET_KEY
+      );
+      console.log('New Token:', token);
+      return res.status(202).json({ success: true, message: "Transaction Successful", token: token });
+    }).catch(err => console.log(err));
+  } catch (err) {
+    console.log(err);
+    res.status(403).json({ error: err, message: "Something went wrong" });
+  }
+};
+

@@ -7,6 +7,7 @@ const bodyParser=require('body-parser');
 const userRoute=require('./route/user');
 const expenceRoute=require('./route/expense');
 const purchaseRoute=require('./route/purchase')
+const premiumFeatureRoute=require('./route/premium')
 
 const sequelize=require('./util/database');
 const User = require('./model/user');
@@ -18,6 +19,7 @@ app.use(bodyParser.json());
 app.use('/user', userRoute);
 app.use('/expense', expenceRoute);
 app.use('/purchase', purchaseRoute )
+app.use('/premium',premiumFeatureRoute )
 
 User.hasMany(Expense);
 Expense.belongsTo(User)

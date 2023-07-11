@@ -17,8 +17,19 @@ const User=sequelize.define('u',{
         type:Sequelize.STRING,
         allowNull:false
     },
-    // ispremiumuser:Sequelize.BOOLEAN
- 
+    ispremiumuser: {
+        type: Sequelize.STRING, // Use STRING type instead of BOOLEAN
+        defaultValue: 'false', // Set default value as a string
+        get() {
+          const rawValue = this.getDataValue('ispremiumuser');
+          return rawValue === 'true'; // Convert string to boolean
+        },
+        set(value) {
+          const convertedValue = value ? 'true' : 'false'; // Convert boolean to string
+          this.setDataValue('ispremiumuser', convertedValue);
+        }
+      }
+    
 });
 
 module.exports=User;

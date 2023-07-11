@@ -17,7 +17,8 @@ const signUp=async(req, res)=>{
     const result=await User.create({
           name:name,
           email:email,
-          password:hashedPassword
+          password:hashedPassword,
+        
     })
     //generate token
     const token=jwt.sign({email:email, id:result.id}, process.env.SECRET_KEY)
@@ -30,25 +31,33 @@ const signUp=async(req, res)=>{
 }
 
 
-const signIn=async(req, res)=>{
-  const {email, password}=req.body;
-  try{
-  const existingUser=await User.findOne({where:{email}});
-  if(!existingUser){
-    return res.status(404).json({message:"user not found"})
-  }
-  const matchPassword=await bcrypt.compare(password, existingUser.password)
-  if(!matchPassword){
-    return res.status(400).json({message:"Invalid Credential"})
-  }
-  const token=jwt.sign({email:existingUser.email, id:existingUser.id}, process.env.SECRET_KEY);
-  console.log("45================+++", token )
-  res.status(201).json({user:existingUser, message:"user logged in successfully", token:token});
-  }catch(error){
+
+const signIn = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const existingUser = await User.findOne({ where: { email } });
+    console.log("41", existingUser)
+    if (!existingUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const matchPassword = await bcrypt.compare(password, existingUser.password);
+    if (!matchPassword) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+    const { email: useremail, id: userid, ispremiumuser } = existingUser;
+    const token = jwt.sign(
+      { email: useremail, id: userid, ispremiumuser },
+      process.env.SECRET_KEY
+    );
+    console.log("Token:", token);
+    res
+      .status(201)
+      .json({ user: existingUser, message: "User logged in successfully", token:token });
+  } catch (error) {
     console.log(error);
-    res.status(500).json({message:"something went wrong"})
+    res.status(500).json({ message: "Something went wrong" });
   }
-}
+};
 
 module.exports={signUp, signIn}
 
