@@ -1,7 +1,7 @@
 const Sequelize=require('sequelize');
 const sequelize=require('../util/database');
 
-const Expense=sequelize.define('e',{
+const Expense=sequelize.define('expense',{
   id:{
     type:Sequelize.INTEGER,
     autoIncrement:true,
@@ -20,7 +20,6 @@ const Expense=sequelize.define('e',{
     type:Sequelize.DOUBLE,
     allowNull:false
   }
- 
 });
 
 module.exports=Expense;

@@ -110,12 +110,20 @@ async function removeTransaction(id) {
 
 
 window.addEventListener("DOMContentLoaded", async () => {
-  const isPremiumUser = localStorage.getItem('isPremiumUser');
+  const token = localStorage.getItem('token');
+  const decodeToken = parseJwt(token);
+  console.log('Decoded Token:', decodeToken);
+
+  const isPremiumUser = decodeToken.ispremiumuser;
+  console.log("Is Premium User:", isPremiumUser);
+
   if (isPremiumUser) {
-    document.getElementById('rzp-btn1').style.display = 'hidden';
-    document.getElementById('message').innerHTML = 'You are a Premium User';
+    console.log("User is already a Premium User");
+    document.getElementById('rzp-btn1').style.display = "none";
+    document.getElementById('message').innerHTML = "You are a Premium User";
+    showleaderboard()
+    return; // Stop further execution
   }
-  const token = localStorage.getItem('token')
   const data = await axios.get("http://localhost:9100/expense/get-expense", { headers: { "Authorization": token } })
     .then((response) => {
       console.log(response)
@@ -135,9 +143,6 @@ window.addEventListener("DOMContentLoaded", async () => {
     }) 
 })
 
-  
-
-
 form.addEventListener('submit', addTransaction);
 
 function showleaderboard(){
@@ -148,6 +153,7 @@ function showleaderboard(){
   leaderBoardButton.style.color = 'white'
   leaderBoardButton.value = 'Leader Board'
   leaderBoardButton.onclick = async () => {
+    leaderBoardButton.style.display = 'none'
     const token = localStorage.getItem('token')
     console.log('151>>>>>>>>>>>>>>>>>>>>>>>>>>>>', token)
     const userLeaderBoardArray = await axios.get('http://localhost:9100/premium/showleaderboard', { headers: { "Authorization": token } })
@@ -157,7 +163,7 @@ function showleaderboard(){
     const dataObject=userLeaderBoardArray.data
     console.log('157nnnnnnnnnnnnnnnnnnnnnnnn',dataObject)
     dataObject.forEach((userDetails)=>{
-    parentElement.innerHTML+=`<li>Name:${userDetails.name}---->Total amount:${userDetails.totalCost}</li>`
+    parentElement.innerHTML+=`<li>Name:${userDetails.name}---->Total amount:${userDetails.totalExpense}</li>`
     })
   }
 parentElement.appendChild(leaderBoardButton);

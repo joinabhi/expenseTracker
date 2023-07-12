@@ -1,7 +1,7 @@
 const Sequelize=require('sequelize');
 const sequelize=require('../util/database');
 
-const User=sequelize.define('u',{
+const User=sequelize.define('user',{
     id:{
         type:Sequelize.INTEGER,
         autoIncrement:true,
@@ -16,6 +16,10 @@ const User=sequelize.define('u',{
    password:{
         type:Sequelize.STRING,
         allowNull:false
+    },
+    totalExpense:{
+      type:Sequelize.INTEGER,
+      defaultValue:0
     },
     ispremiumuser: {
         type: Sequelize.STRING, // Use STRING type instead of BOOLEAN

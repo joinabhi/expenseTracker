@@ -25,7 +25,7 @@ exports.purchasePremium = async (req, res) => {
         }
       });
     });
-    await Order.create({ orderid: order.id, status: "PENDING", uId:req.user.id})
+    await Order.create({ orderid: order.id, status: "PENDING", userId:req.user.id})
    return res.status(201).json({ order, key_id: rzp.key_id, payment_id: rzp});
   } catch (err) {
     console.log(err);
@@ -45,10 +45,8 @@ exports.updateTransactionStatus = async (req, res) => {
 
     Promise.all([promise1, promise2]).then(() => {
     
-      
-      
       const token = jwt.sign(
-        {uId:req.user.id, ispremiumuser:true },
+        {userId:req.user.id, ispremiumuser:true },
         process.env.SECRET_KEY
       );
       console.log('New Token:', token);

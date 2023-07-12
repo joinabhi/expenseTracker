@@ -11,8 +11,10 @@ function login(event){
 
     axios.post("http://localhost:9100/user/add-signIn", userLogin)
          .then(response=>{
+            console.log('16------16----------16', response)
             if(response.status===201){
                alert(response.data.message)
+               
             //    console.log('166666666666666', token)
                localStorage.setItem('token', response.data.token)
                window.location.href="../expenseTracker/expense.html"
