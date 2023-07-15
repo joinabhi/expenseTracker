@@ -122,7 +122,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     document.getElementById('rzp-btn1').style.display = "none";
     document.getElementById('message').innerHTML = "You are a Premium User";
     showleaderboard()
-    return; // Stop further execution
+    // return; // Stop further execution
   }
   const data = await axios.get("http://localhost:9100/expense/get-expense", { headers: { "Authorization": token } })
     .then((response) => {
@@ -181,6 +181,27 @@ function parseJwt(token) {
 
   return JSON.parse(jsonPayload);
 }
+
+async function download() {
+  try {
+    const response = await axios.get('http://localhost:9100/user/download', {
+      headers: { "Authorization": token }
+    });
+
+    if (response.status === 201) {
+      const downloadUrl = response.data.fileUrl;
+      const downloadLink = document.createElement('a');
+      downloadLink.href = downloadUrl;
+      downloadLink.download = 'myexpense.csv';
+      downloadLink.click();
+    } else {
+      throw new Error(response.data.message);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 
 document.getElementById("rzp-btn1").onclick = async function (e) {
   try {

@@ -10,7 +10,7 @@ router.get('/premiummembership', userAuthentication.authenticate, purchaseContro
 
 router.post('/updatetransactionstatus',userAuthentication.authenticate, purchaseController.updateTransactionStatus);
 
-// router.post('/userDetails',userController.userDetails)
+
 
 
 

@@ -6,10 +6,10 @@ exports.authenticate=(req, res, next)=>{
     const token=req.header('Authorization') ;
     console.log('7----------------0000000',token)
     const user=jwt.verify(token, process.env.SECRET_KEY);
-    console.log('userId>>>>>>>>>>>>>', user.id)
-    User.findByPk(user.id).then(user=>{
+    console.log('userId>>>>>>>>>>>>>', user.userId)
+    User.findByPk(user.userId).then(user=>{
         req.user=user;
-        // console.log('12 ka haal ba ho bhai gupta',req.user.id)
+        // console.log('12 ka haal ba ho bhai gupta',req.user.userId)
         next();
     })
     }

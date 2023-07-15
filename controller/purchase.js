@@ -1,6 +1,7 @@
 const Razorpay = require("razorpay");
 const Order = require('../model/orders');
 const jwt=require("jsonwebtoken");
+const Expense=require('../model/expense');
 const User=require('../model/user');
 require('dotenv').config()
 
@@ -25,7 +26,7 @@ exports.purchasePremium = async (req, res) => {
         }
       });
     });
-    await Order.create({ orderid: order.id, status: "PENDING", userId:req.user.id})
+    await Order.create({ orderid: order.id, status: "PENDING", id:req.user.userId})
    return res.status(201).json({ order, key_id: rzp.key_id, payment_id: rzp});
   } catch (err) {
     console.log(err);

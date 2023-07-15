@@ -21,7 +21,7 @@ const signUp=async(req, res)=>{
         
     })
     //generate token
-    const token=jwt.sign({email:email, id:result.id}, process.env.SECRET_KEY)
+    const token=jwt.sign({email:email, userId:result.id}, process.env.SECRET_KEY)
     return res.status(201).json({user:result, message:"Registration Successful", token:token})
    
   }catch(error){
@@ -42,9 +42,9 @@ const signIn = async (req, res) => {
     if (!matchPassword) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    const { email: useremail, id: userid, ispremiumuser } = existingUser;
+    const { email: useremail, id: userId, ispremiumuser } = existingUser;
     const token = jwt.sign(
-      { email: useremail, id: userid, ispremiumuser },
+      { email: useremail, userId: userId, ispremiumuser },
       process.env.SECRET_KEY
     );
     console.log("Token:", token);
