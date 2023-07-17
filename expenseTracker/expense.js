@@ -112,16 +112,17 @@ async function removeTransaction(id) {
 window.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem('token');
   const decodeToken = parseJwt(token);
-  console.log('Decoded Token:', decodeToken);
+  // console.log('Decoded Token:', decodeToken);
 
   const isPremiumUser = decodeToken.ispremiumuser;
-  console.log("Is Premium User:", isPremiumUser);
+  // console.log("Is Premium User:", isPremiumUser);
 
   if (isPremiumUser) {
     console.log("User is already a Premium User");
     document.getElementById('rzp-btn1').style.display = "none";
     document.getElementById('message').innerHTML = "You are a Premium User";
-    showleaderboard()
+    showleaderboard();
+    // download();
     // return; // Stop further execution
   }
   const data = await axios.get("http://localhost:9100/expense/get-expense", { headers: { "Authorization": token } })
@@ -184,7 +185,8 @@ function parseJwt(token) {
 
 async function download() {
   try {
-    const response = await axios.get('http://localhost:9100/user/download', {
+    const token=localStorage.getItem('token')
+    const response = await axios.get('http://localhost:9100/userexpense/download', {
       headers: { "Authorization": token }
     });
 
@@ -205,20 +207,20 @@ async function download() {
 
 document.getElementById("rzp-btn1").onclick = async function (e) {
   try {
-    const token = localStorage.getItem('token');
-    const decodeToken = parseJwt(token);
-    console.log('Decoded Token:', decodeToken);
+    // const token = localStorage.getItem('token');
+    // const decodeToken = parseJwt(token);
+    // console.log('Decoded Token:', decodeToken);
 
-    const isPremiumUser = decodeToken.ispremiumuser;
-    console.log("Is Premium User:", isPremiumUser);
+    // const isPremiumUser = decodeToken.ispremiumuser;
+    // console.log("Is Premium User:", isPremiumUser);
 
-    if (isPremiumUser) {
-      console.log("User is already a Premium User");
-      document.getElementById('rzp-btn1').style.display = "none";
-      document.getElementById('message').innerHTML = "You are a Premium User";
-      showleaderboard()
-      return; // Stop further execution
-    }
+    // if (isPremiumUser) {
+    //   console.log("User is already a Premium User");
+    //   document.getElementById('rzp-btn1').style.display = "none";
+    //   document.getElementById('message').innerHTML = "You are a Premium User";
+    //   showleaderboard()
+    //   return; // Stop further execution
+    // }
       const purchaseResponse = await axios.get("http://localhost:9100/purchase/premiummembership", {
       headers: {
         "Authorization": token
@@ -248,7 +250,8 @@ document.getElementById("rzp-btn1").onclick = async function (e) {
           document.getElementById('message').innerHTML = "You are a Premium User";
           console.log('266', response)
           localStorage.setItem('token', response.data.token)
-          showleaderboard()
+          showleaderboard();
+          // download();
           
     
          } catch (error) {

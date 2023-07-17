@@ -3,6 +3,9 @@ const Expense=require('../model/expense');
 const User=require('../model/user')
 const sequelize=require('../util/database')
 
+const UserService=require('../service/userservice')
+const S3Service=require('../service/s3service')
+
 exports.addExpense = async (req, res, next) => {
     let transaction = null; // Define the transaction variable outside the try block
     try {
@@ -33,6 +36,8 @@ exports.addExpense = async (req, res, next) => {
     }
 }
 
+
+
 exports.getExpense = async(req, res, next)=>{
     try{
         console.log('21((((((((((((((((()))))))))))))', req.user.id )
@@ -40,7 +45,7 @@ exports.getExpense = async(req, res, next)=>{
         const expenses=await Expense.findAll({where:{userId:req.user.id}});
         
     //    const expenses= req.user.allExpenses();
-        console.log('22', expenses)
+        // console.log('22', expenses)
         res.status(200).json({allExpenses:expenses})
     }
     catch(error){
@@ -48,6 +53,24 @@ exports.getExpense = async(req, res, next)=>{
         res.status(500).json({message:"something went wrong"})
 }
 }
+
+exports.userExpenseDownload=async(req, res, next)=>{
+    try{
+        const expenses=await UserService.getExpenses(req);
+        console.log(expenses);
+        const stringifiedExpenses=JSON.stringify(expenses)
+        const userId=req.user.id
+        const filename=`Expense${userId}/${new Date()}.txt`;
+        const fileUrl=await S3Service.uploadToS3(stringifiedExpenses, filename);
+        res.status(200).json({fileUrl, success:true})
+    }catch(err){
+        console.log(err)
+        res.status(500).json({fileUrl:'', success:false})
+    }
+
+}
+
+
 exports.deleteExpense = async(req, res, next)=>{
     const expenseId=req.params.id;
     try{

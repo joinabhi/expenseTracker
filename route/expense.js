@@ -7,6 +7,9 @@ router.post('/add-expense',userAuthentication.authenticate, expenseController.ad
 
 router.get('/get-expense', userAuthentication.authenticate, expenseController.getExpense);
 
+router.get('/download', userAuthentication.authenticate, expenseController.userExpenseDownload)
+
 router.delete('/delete-expense/:id',userAuthentication.authenticate, expenseController.deleteExpense);
+
 
 module.exports=router;
