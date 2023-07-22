@@ -36,16 +36,11 @@ exports.addExpense = async (req, res, next) => {
     }
 }
 
-
-
 exports.getExpense = async(req, res, next)=>{
     try{
         console.log('21((((((((((((((((()))))))))))))', req.user.id )
-        // console.log("2333333333333333333333333333333333333", user)
+       
         const expenses=await Expense.findAll({where:{userId:req.user.id}});
-        
-    //    const expenses= req.user.allExpenses();
-        // console.log('22', expenses)
         res.status(200).json({allExpenses:expenses})
     }
     catch(error){
@@ -53,6 +48,16 @@ exports.getExpense = async(req, res, next)=>{
         res.status(500).json({message:"something went wrong"})
 }
 }
+    
+
+exports.expensePagination=async(req, res, next)=>{
+    try{
+         const allExpenses= await Expense.findAll({where:{userId:req.user.id}})
+         res.status(200).json({allExpenses:allExpenses})
+        }catch(err){
+        console.log(err)
+    }
+ }
 
 exports.userExpenseDownload=async(req, res, next)=>{
     try{

@@ -84,6 +84,14 @@ input[type="text"], input[type="number"]{
 .btn:focus, .delete-btn:focus{
     outline: 0;
 }
+
+.pagination{
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+  
+}
+
 .list{
     list-style-type: none;
     padding: 0;

@@ -7,6 +7,7 @@ function forgotPassword(event) {
     document.forms[0].reset();
     axios.post('http://localhost:9100/password/forgotpassword', user)
         .then(response => {
+            console.log('10 ka dum', response)
             if (response.status === 202) {
                 document.body.innerHTML +=
                     '<div style="color:green;">Mail Successfully sent</div>'

@@ -1,5 +1,5 @@
-const uuid = require('uuid');
-const sgMail = require('@sendgrid/mail');
+const {v4 : uuidv4} = require('uuid')
+const SibApiV3Sdk = require('sib-api-v3-sdk');
 const bcrypt = require('bcrypt');
 require('dotenv').config()
 
@@ -7,38 +7,47 @@ const User = require('../model/user')
 const Forgotpassword = require('../model/forgotpassword');
 
 const forgotpassword = async (req, res) => {
-    try {
-      const { email } = req.body;
-      const user = await User.findOne({ where: { email } });
-  
-      if (!user) {
-        throw new Error('User does not exist');
-      }
-  
-      const id = uuid.v4();
-      await user.createForgotpassword({ id, active: true });
-  
-      sgMail.setApiKey(process.env.API_KEY);
-  
-      const msg = {
-        to: 'abhi.gpt96@gmail.com',
-        from: 'ashu@gmail.com',
-        subject: 'Reset Password',
-        text: 'Click the link below to reset your password',
-        html: `<a href="http://localhost:3000/password/resetpassword/${id}">Reset password</a>`,
-      };
-  
-      const response = await sgMail.send(msg);
-  
-      return res.status(response[0].statusCode).json({
-        message: 'Link, To reset password has sent on your email',
-        success: true,
-      });
-    } catch (err) {
-      console.error(err);
-      return res.json({ message: err.message, success: false });
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      throw new Error('User does not exist');
     }
-  };
+
+    const id = uuidv4()
+    await user.createForgotpassword({ id, active: true });
+
+    // Initialize the Sendinblue API client with the API key
+    const apiKey = SibApiV3Sdk.ApiClient.instance.authentications['api-key'];
+    apiKey.apiKey ="xsmtpsib-9d98788eb141817cf51de4940ea83fcd1c80d48edeef8905176a3c46a7286a79-fVXknrd7bxHIJ2y6"
+
+    const sendinblue = new SibApiV3Sdk.TransactionalEmailsApi();
+
+    const emailData = {
+      to: [{ email: 'abhi.gpt96@gmail.com' }],
+      from: { email: 'sanugpt23@gmail.com' },
+      subject: 'Reset Password',
+      textContent: 'Click the link below to reset your password',
+      htmlContent: `<a href="http://localhost:3000/password/resetpassword/${id}">Reset password</a>`,
+    };
+
+    // Send the email using Sendinblue
+    const response = await sendinblue.sendTransacEmail(emailData);
+
+    return res.status(response.status).json({
+      message: 'Link to reset password has been sent to your email',
+      success: true,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.json({ message: err.message, success: false });
+  }
+};
+
+
+
+
   
   const resetpassword = async (req, res) => {
     try {

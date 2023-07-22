@@ -1,4 +1,4 @@
 exports.getExpenses=(req)=>{
-   return req.user.getExpenses(where)
+   return req.user.getExpenses(req)
 }
 
