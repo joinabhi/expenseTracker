@@ -20,7 +20,7 @@ const forgotpassword = async (req, res) => {
 
     // Initialize the Sendinblue API client with the API key
     const apiKey = SibApiV3Sdk.ApiClient.instance.authentications['api-key'];
-    apiKey.apiKey ="xsmtpsib-9d98788eb141817cf51de4940ea83fcd1c80d48edeef8905176a3c46a7286a79-fVXknrd7bxHIJ2y6"
+    apiKey.apiKey =process.env.SENDINBLUE_API_KEY
 
     const sendinblue = new SibApiV3Sdk.TransactionalEmailsApi();
 

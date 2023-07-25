@@ -59,18 +59,24 @@ exports.expensePagination=async(req, res, next)=>{
     }
  }
 
+
+
 exports.userExpenseDownload=async(req, res, next)=>{
     try{
         const expenses=await UserService.getExpenses(req);
-        console.log(expenses);
+        console.log("65++++++++++++++++++++++++++++",expenses);
         const stringifiedExpenses=JSON.stringify(expenses)
+        console.log("67__________________",stringifiedExpenses)
         const userId=req.user.id
         const filename=`Expense${userId}/${new Date()}.txt`;
+       
+
         const fileUrl=await S3Service.uploadToS3(stringifiedExpenses, filename);
+        console.log('70--------', fileUrl)
         res.status(200).json({fileUrl, success:true})
     }catch(err){
         console.log(err)
-        res.status(500).json({fileUrl:'', success:false})
+        res.status(500).json({fileUrl:'Abhi bhi nhi aaya kya', success:false})
     }
 
 }

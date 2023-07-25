@@ -1,12 +1,16 @@
+const path=require('path')
+
 const express=require('express');
-const app=express();
+
 const cors=require('cors');
 const helmet=require('helmet')
 const compression=require('compression')
 const morgan=require('morgan')
 const fs=require('fs')
-const path=require('path')
 
+const app=express();
+const dotenv=require('dotenv');
+dotenv.config();
 
 const bodyParser=require('body-parser');
 const userRoute=require('./route/user');
@@ -39,6 +43,7 @@ app.use('/premium',premiumFeatureRoute)
 app.use('/password', resetPasswordRoute);
 app.use('/userexpense', userExpenseRoute)
 app.use('/expenses',itemPagination )
+
 
 User.hasMany(Expense);
 Expense.belongsTo(User)

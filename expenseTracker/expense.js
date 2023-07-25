@@ -336,9 +336,10 @@ async function download() {
     const response = await axios.get('http://localhost:9100/userexpense/download', {
       headers: { "Authorization": token }
     });
-
-    if (response.status === 201) {
+      console.log('3393393339333339', response)
+    if (response.status === 200) {
       const downloadUrl = response.data.fileUrl;
+      console.log('342_______________--------------', downloadUrl)
       const downloadLink = document.createElement('a');
       downloadLink.href = downloadUrl;
       downloadLink.download = 'myexpense.csv';

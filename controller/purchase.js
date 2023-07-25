@@ -8,8 +8,8 @@ require('dotenv').config()
 exports.purchasePremium = async (req, res) => {
   try {
     const rzp = new Razorpay({
-      key_id: "rzp_test_sLb0DantiV2TJV",
-      key_secret: "2yDu5uWLjckKdnyfwz3N4oaP"
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET
     });
 
     const options = {
