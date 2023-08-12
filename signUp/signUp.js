@@ -13,7 +13,7 @@ function signUp(event) {
 // Reset the form fields
   document.forms[0].reset(); 
 // Send a POST request to the backend API using Axios
-  axios.post("http://localhost:9100/user/add-signUp", user)
+  axios.post("http://13.48.40.12/user/add-signUp", user)
     .then((response) => {
       if(response.status===201){  
         alert(response.data.message)

@@ -34,7 +34,7 @@ function addTransaction(e) {
     console.log(transaction)
     try {
       const token = localStorage.getItem('token')
-      axios.post('http://localhost:9100/expense/add-expense', transaction, { headers: { "Authorization": token } })
+      axios.post('http://13.48.40.12/expense/add-expense', transaction, { headers: { "Authorization": token } })
         .then(response => {
           console.log("34", response)
           const newTransaction = response.data.expenseDetails;
@@ -100,7 +100,7 @@ function updateValues() {
 async function removeTransaction(id) {
   try {
     const token = localStorage.getItem('token')
-    await axios.delete(`http://localhost:9100/expense/delete-expense/${id}`, { headers: { "Authorization": token } })
+    await axios.delete(`http://13.48.40.12/expense/delete-expense/${id}`, { headers: { "Authorization": token } })
     transactions = transactions.filter(transaction => transaction.id !== id);
     updateValues()
     list.innerHTML = '';
@@ -115,7 +115,7 @@ var page_number = 1;
 
 // async function allExpenseResponse(){
 //   const token = localStorage.getItem('token');
-//   const res= await axios.get(`http://localhost:9100/expenses?page=${page_number}}`, { headers: { "Authorization": token } })
+//   const res= await axios.get(`http://13.48.40.12/expenses?page=${page_number}}`, { headers: { "Authorization": token } })
 //   transactions = res.data.allExpenses;
 //   const total_records=transactions.length;
 //   record_per_page=parseInt(records_size.value);
@@ -200,7 +200,7 @@ function prevBtn(){
 
 records_size.addEventListener('change',async function(e){
   const token = localStorage.getItem('token');
-  const res= await axios.get(`http://localhost:9100/expenses?page=${page_number}}`, { headers: { "Authorization": token } })
+  const res= await axios.get(`http://13.48.40.12/expenses?page=${page_number}}`, { headers: { "Authorization": token } })
   transactions = res.data.allExpenses;
   const total_records=transactions.length;
   record_per_page=parseInt(records_size.value);
@@ -238,7 +238,7 @@ function page(index){
 window.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem('token');
   try{
-const res= await axios.get(`http://localhost:9100/expenses?page=${page_number}`, { headers: { "Authorization": token } })
+const res= await axios.get(`http://13.48.40.12/expenses?page=${page_number}`, { headers: { "Authorization": token } })
 console.log('157,------------dil------------00000000000000000000', res)
  
  transactions = res.data.allExpenses;
@@ -272,7 +272,7 @@ const isPremiumUser = decodeToken.ispremiumuser;
     // download();
     // return; // Stop further execution
   }
-  const data = await axios.get("http://localhost:9100/expense/get-expense", { headers: { "Authorization": token } })
+  const data = await axios.get("http://13.48.40.12/expense/get-expense", { headers: { "Authorization": token } })
     .then((response) => {
       console.log('1111111111888888888888444444444444', response)
       
@@ -304,7 +304,7 @@ function showleaderboard(){
     leaderBoardButton.style.display = 'none'
     const token = localStorage.getItem('token')
     console.log('151>>>>>>>>>>>>>>>>>>>>>>>>>>>>', token)
-    const userLeaderBoardArray = await axios.get('http://localhost:9100/premium/showleaderboard', { headers: { "Authorization": token } })
+    const userLeaderBoardArray = await axios.get('http://13.48.40.12/premium/showleaderboard', { headers: { "Authorization": token } })
     console.log('234>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<',userLeaderBoardArray)
     const parentElement = document.getElementById('listofexpenses')
     parentElement.innerHTML = parentElement.innerHTML + '<h1>Leader Board</h1>'
@@ -333,7 +333,7 @@ function parseJwt(token) {
 async function download() {
   try {
     const token=localStorage.getItem('token')
-    const response = await axios.get('http://localhost:9100/userexpense/download', {
+    const response = await axios.get('http://13.48.40.12/userexpense/download', {
       headers: { "Authorization": token }
     });
       console.log('3393393339333339', response)
@@ -369,7 +369,7 @@ document.getElementById("rzp-btn1").onclick = async function (e) {
     //   showleaderboard()
     //   return; // Stop further execution
     // }
-      const purchaseResponse = await axios.get("http://localhost:9100/purchase/premiummembership", {
+      const purchaseResponse = await axios.get("http://13.48.40.12/purchase/premiummembership", {
       headers: {
         "Authorization": token
       }
@@ -382,7 +382,7 @@ document.getElementById("rzp-btn1").onclick = async function (e) {
       order_id: purchaseResponse.data.order.id,
       handler: async function (purchaseResponse) {
         try {
-          const response = await axios.post('http://localhost:9100/purchase/updatetransactionstatus', {
+          const response = await axios.post('http://13.48.40.12/purchase/updatetransactionstatus', {
             order_id: options.order_id,
             payment_id: purchaseResponse.razorpay_payment_id
           }, {

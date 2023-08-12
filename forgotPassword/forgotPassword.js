@@ -5,7 +5,7 @@ function forgotPassword(event) {
         email
     }
     document.forms[0].reset();
-    axios.post('http://localhost:9100/password/forgotpassword', user)
+    axios.post('http://13.48.40.12/password/forgotpassword', user)
         .then(response => {
             console.log('10 ka dum', response)
             if (response.status === 202) {
