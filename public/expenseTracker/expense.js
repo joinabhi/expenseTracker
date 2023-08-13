@@ -355,7 +355,7 @@ async function download() {
 
 document.getElementById("rzp-btn1").onclick = async function (e) {
   try {
-    // const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
     // const decodeToken = parseJwt(token);
     // console.log('Decoded Token:', decodeToken);
 
