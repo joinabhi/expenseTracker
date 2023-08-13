@@ -3,10 +3,10 @@ const path=require('path')
 const express=require('express');
 
 const cors=require('cors');
-const helmet=require('helmet')
-const compression=require('compression')
-const morgan=require('morgan')
-const fs=require('fs')
+// const helmet=require('helmet')
+// const compression=require('compression')
+// const morgan=require('morgan')
+// const fs=require('fs')
 
 const app=express();
 const dotenv=require('dotenv');
@@ -27,15 +27,15 @@ const Expense = require('./model/expense');
 const Order=require('./model/orders');
 const Forgotpassword=require('./model/forgotpassword')
 
-const accessLogStream=fs.createWriteStream(
-  path.join(__dirname, 'access.log'),
-  {flags:'a'}
-);
+// const accessLogStream=fs.createWriteStream(
+//   path.join(__dirname, 'access.log'),
+//   {flags:'a'}
+// );
 app.use(cors())
 app.use(bodyParser.json());
-app.use(helmet());
-app.use(compression());
-app.use(morgan('combined',{stream:accessLogStream}))
+// app.use(helmet());
+// app.use(compression());
+// app.use(morgan('combined',{stream:accessLogStream}))
 app.use('/user', userRoute);
 app.use('/expense', expenceRoute);
 app.use('/purchase', purchaseRoute)
