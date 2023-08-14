@@ -203,7 +203,7 @@ records_size.addEventListener('change',async function(e){
   const record_per_page = parseInt(records_size.value);
   const offset = (page_number - 1) * record_per_page;
   const query = `SELECT column1, column2, ... FROM expenses_table LIMIT ${offset}, ${record_per_page}`;
-  const res = await axios.get(`http://13.48.40.12/query?query=${encodeURIComponent(query)}`, { headers: { "Authorization": token } });
+  const res = await axios.get(`http://13.48.40.12/expenses?page=${encodeURIComponent(query)}`, { headers: { "Authorization": token } });
   transactions = res.data.allExpenses;
   console.log("hum h rahi pyar k, fir milenge chalte chalte", transactions)
   const total_records=transactions.length;
