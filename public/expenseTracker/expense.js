@@ -200,7 +200,10 @@ function prevBtn(){
 
 records_size.addEventListener('change',async function(e){
   const token = localStorage.getItem('token');
-  const res= await axios.get(`http://13.48.40.12/expenses?page=${page_number}}`, { headers: { "Authorization": token } })
+  const record_per_page = parseInt(records_size.value);
+  const offset = (page_number - 1) * record_per_page;
+  const query = `SELECT column1, column2, ... FROM expenses_table LIMIT ${offset}, ${record_per_page}`;
+  const res = await axios.get(`http://13.48.40.12/query?query=${encodeURIComponent(query)}`, { headers: { "Authorization": token } });
   transactions = res.data.allExpenses;
   console.log("hum h rahi pyar k, fir milenge chalte chalte", transactions)
   const total_records=transactions.length;
@@ -208,17 +211,17 @@ records_size.addEventListener('change',async function(e){
   total_page=Math.ceil(total_records/record_per_page)
   let start_index=(page_number-1)*record_per_page;
   let end_index=start_index+(record_per_page-1);
+  end_index=Math.min(end_index, total_records-1)
   list.innerHTML = '';
   console.log('281------------------', end_index)
   for(let i=start_index;i<=end_index;i++){
     addTransactionDOM(transactions[i])
   }
-
   generatePage()
   pageDetail.innerHTML=`Showing ${start_index+1} to ${end_index+1} of ${total_records}`
- 
+ })
 
-})
+
 function page(index){
   page_number=parseInt(index)
   document.querySelectorAll('.dynamic-item').forEach(item=>{
