@@ -29,7 +29,7 @@ const forgotpassword = async (req, res) => {
       from: { email: 'sanugpt23@gmail.com' },
       subject: 'Reset Password',
       textContent: 'Click the link below to reset your password',
-      htmlContent: `<a href="http://localhost:3000/password/resetpassword/${id}">Reset password</a>`,
+      htmlContent: `<a href="http:13.48.40.12/password/resetpassword/${id}">Reset password</a>`,
     };
 
     // Send the email using Sendinblue
