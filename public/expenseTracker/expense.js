@@ -202,6 +202,7 @@ records_size.addEventListener('change',async function(e){
   const token = localStorage.getItem('token');
   const res= await axios.get(`http://13.48.40.12/expenses?page=${page_number}}`, { headers: { "Authorization": token } })
   transactions = res.data.allExpenses;
+  console.log("hum h rahi pyar k, fir milenge chalte chalte", transactions)
   const total_records=transactions.length;
   record_per_page=parseInt(records_size.value);
   total_page=Math.ceil(total_records/record_per_page)
