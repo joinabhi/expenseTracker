@@ -26,7 +26,7 @@ const forgotpassword = async (req, res) => {
 
     const emailData = {
       to: [{ email: 'abhi.gpt96@gmail.com' }],
-      from: { email: 'sanugpt23@gmail.com' },
+      from: {email},
       subject: 'Reset Password',
       textContent: 'Click the link below to reset your password',
       htmlContent: `<a href="http:13.48.40.12/password/resetpassword/${id}">Reset password</a>`,
