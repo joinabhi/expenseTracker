@@ -208,7 +208,7 @@ records_size.addEventListener('change',async function(e){
   total_page=Math.ceil(total_records/record_per_page)
   let start_index=(page_number-1)*record_per_page;
   let end_index=start_index+(record_per_page-1);
-  end_index=Math.min(end_index, total_recordsnt)
+ 
   list.innerHTML = '';
   console.log('281------------------', end_index)
   for(let i=start_index;i<=end_index;i++){
