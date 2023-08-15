@@ -19,6 +19,7 @@ const forgotpassword = async (req, res) => {
     await user.createForgotpassword({ id, active: true });
 
     // Initialize the Sendinblue API client with the API key
+    console.log("22------>",process.env.SENDINBLUE_API_KEY)
     const apiKey = SibApiV3Sdk.ApiClient.instance.authentications['api-key'];
     apiKey.apiKey =process.env.SENDINBLUE_API_KEY
 
